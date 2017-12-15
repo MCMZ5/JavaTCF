@@ -4,12 +4,14 @@ public class Player{
 
     //-----ATTRIBUTI------
 
-    private String name;                    //nome del giocatore
-    private Boolean crashed;                //bool se si è schiantato contro un ostacolo
-    private Vector<Vector<Point>> map;      //mappa di gioco, rettangolo di punti
-    private int width;                      //larghezza della mappa
-    private int lenght;                     //altezza della mappa
-    private Vector<Obstacle> obvect;        //vettore contenente tutti gli ostacoli
+    private String name;                        //nome del giocatore
+    private Boolean crashed;                    //bool se si è schiantato contro un ostacolo        
+    private int width;                          //larghezza della mappa
+    private int lenght;                         //altezza della mappa
+    private Vector<Vector<Point>> map;          //mappa di gioco, rettangolo di punti
+    private Vector<Obstacle> obvect;            //vettore contenente tutti gli ostacoli
+    private Character character;                //è il nostro personaggio, un derivato al pari degli ostacoli
+                                                  //della classe astratta Object
 
     //------METODI-------
 
@@ -38,9 +40,9 @@ public class Player{
      */
     private void Draw(){
 
-        UpdatePosition(this);
+        map = charachter.UpdatePosition(map);
         for (Obstacle o : obvect) {
-            UpdatePosition(o);
+            map = o.UpdatePosition(map);
         }       
         for(int i=0;i<width;i++){
             Vector<Point> r=matrix.get(i);
@@ -50,13 +52,22 @@ public class Player{
             System.out.println(); 
         }
     }
+    /**
+     * - per ogni punto di ogni ostacolo verifica se c'è stata
+     * la collisione
+     */
     private void CheckCrashed(){
-
+        for (Obstacle o : obvect) {
+            if(o.CheckCollision()==true){
+                crashed = true;
+            }
+        }
     }
     /**
      * - disegna la mappa aggiornata
      * - inserisce (se necessario) un nuovo ostacolo nel vettore
      * - aspetta un tempo prefissato prima di rieseguirsi
+     * - esce quando il giocatore si schianta
      */
     public void Run(){
         int counter; //decide dopo quanti cicli mandare un nuovo ostacolo
@@ -69,12 +80,7 @@ public class Player{
             }
             Thread.sleep(41); //41 millisecondi dovrebbero essere 1/24 di secondo
         }
-
-
-
-
-        System.out.println("Run");
-        crushed = true; 
+        System.out.println("Ti sei schiantato!");
     }
 
 }

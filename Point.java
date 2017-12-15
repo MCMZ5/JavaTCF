@@ -5,7 +5,7 @@ public class Point{
     private int x;
     private int y;
     private char c;
-    private Boolean isplayer;
+    private Boolean ischarcter;
     private Boolean isobstacle;
 
     public Point(int x_, int y_){
@@ -17,8 +17,8 @@ public class Point{
     public char getChar(){
         return c;
     }
-    public Boolean CheckCrashed(){
-        if(isplayer == true && isobstacle == true){
+    public Boolean CheckCollision(){
+        if(ischarcter == true && isobstacle == true){
             return true;
         }
         else{

@@ -5,7 +5,7 @@ JC = javac
 #OPZIONI DEL COMPILATORE
 #JFLAGS = 
 #IDENTIFICA TUTTI I FILE DA CUI IL PROGRAMMA DIPENDE
-OBJECTS = Point.class Player.class Game.class
+OBJECTS = Point.class Object.class Character.class Obstacle.class Player.class Game.class
 #IDENTIFICA IL NUMERO DI JOBS PER MAKE
 #(NON UTILIZZARE PIÙ DEL NUMERO DI CORES DISPONIBILI)
 CPUCORES = 1
