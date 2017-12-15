@@ -5,28 +5,28 @@ JC = javac
 #OPZIONI DEL COMPILATORE
 #JFLAGS = 
 #IDENTIFICA TUTTI I FILE DA CUI IL PROGRAMMA DIPENDE
-OBJECTS = Player.class Game.class
+OBJECTS = Point.class Player.class Game.class
 #IDENTIFICA IL NUMERO DI JOBS PER MAKE
 #(NON UTILIZZARE PIÙ DEL NUMERO DI CORES DISPONIBILI)
-CPUCORES = 4
+CPUCORES = 1
 
 all:
 	$(MAKE) -j $(CPUCORES) running-tcf
 
 #ISTRUZIONI PER L'ESEGUIBILE
 running-tcf: $(OBJECTS)
-	 jar -cvf $@.jar $(OBJECTS)
+	jar -cvf $@.jar ./endlessrunningtcf/*.class
 
 #ISTRUZIONI PER COMPILARE LE VARIE CLASSI
 %.class: %.java
-	 $(JC) $^
+	 $(JC) -d ./ -cp ./ $^
 	 
 #ISTRUZIONI PER ELIMINARE I FILE *.class
 clean: 
 	 @echo -e "\033[1;34m"RIMOZIONE DEI BINARI IN CORSO..." \033[0m"
-	 $(RM) $(OBJECTS)
+	 $(RM) -r ./endlessrunningtcf
 	 @echo -e "\033[1;34m"RIMOZIONE TERMINATA" \033[0m"
 
 #ISTRUZIONI PER LANCIARE IL PROGRAMMA
 run:
-	java -cp running-tcf.jar Game
+	java -cp running-tcf.jar endlessrunningtcf.Game
