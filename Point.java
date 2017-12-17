@@ -11,8 +11,20 @@ public class Point{
     public Point(int x_, int y_){
         x = x_;
         y = y_;
-        isplayer = false;
+        ischarcter = false;
         isobstacle = false;
+    }
+    public void setX(int x_){
+        x = x_;
+    }
+    public void setY(int y_){
+        y = y_;
+    }
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
     }
     public char getChar(){
         return c;

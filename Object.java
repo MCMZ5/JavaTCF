@@ -6,10 +6,10 @@ public abstract class Object{
 
     //-----ATTRIBUTI------
 
-    private int width;                      //larghezza della box
-    private int lenght;                     //altezza della box
-    private Vector<Vector<Point>> box;      //rettangolo di punti che rappresenta l'ostacolo
-    private double speed;                   //velocità
+    protected int width;                      //larghezza della box
+    protected int lenght;                     //altezza della box
+    protected Vector<Vector<Point>> box;      //rettangolo di punti che rappresenta l'ostacolo
+    protected double speed;                   //velocità
                                               //abbiamo un problema, servono forse due velocità
                                               //orizontale e verticale, rispettivamente per 
                                               //Character e per Obstacle? Oppure basta questa? 
@@ -18,12 +18,12 @@ public abstract class Object{
     //------METODI-------
 
     /**
-     * Invocata da un Object, ricalcola la sua posizione sulla mappa che viene 
-     * passata, e restituisce la nuova mappa
+     * Invocata da un Object, dato un tempo in millisecondi e una mappa, ricalcola 
+     * la sua posizione e restituisce la mappa aggiornata
      */
     //è definita abstract per rendere obbligatorio l'override, con una sola velocità
     //e una sola accelerazione si potrebbero scrivere due funzioni agenti sulle x
     //per gli ostacoli e sulle y per il character
-    public abstract Vector<Vector<Point>> UpdatePosition(Vector<Vector<Point>> map);
+    public abstract Vector<Vector<Point>> UpdatePosition(Vector<Vector<Point>> map, double time);
 
 }
