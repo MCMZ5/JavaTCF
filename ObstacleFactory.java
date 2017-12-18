@@ -16,7 +16,7 @@ public class ObstacleFactory{
         int width = rand.nextInt(10-4) + 4;                 //nmax 10, nmin 4
         int lenght = rand.nextInt(4-1) + 1;                 //nmax 4, nmin 1;
         double speed = rand.nextDouble() * (8.-2.) + 2.;    //nmax 8, nmin 2
-        Obstacle obs = new Obstacle(width, lenght, map);
+        Obstacle obs = new Obstacle(width, lenght, speed, acc, map);
         return obs;
     }
 

@@ -4,27 +4,24 @@ import java.util.Vector;
 
 public class Obstacle extends Object{
 
-    //mi sono fuso, sia il costruttore sia la update sono da rivedere completamente perché non so più cosa fanno
-    //il problema principale è che box e map non possono condividere i punti (non esistono i puntatori), e il 
-    //costruttore di obstacle non può nemmeno disegnare direttamente sulla mappa (non esiste il passaggio by reference)
-    //l'unica soluzione che mi pare al momento plausibile è delegare il disegno degli ostacoli a Game (ovvero al main)
-    //o trasformare map e/o obvect (del main) in classi a sé stanti (tuttavia ci ho provato e ho ottenuto scarsi risultati
-    //in termini di semplicità, quindi non credo sia la soluzione migliore)
-
     /**
-     * - dati i parametri, costruisce la box dell'ostacolo
+     * - dati i parametri, costruisce la box dell'ostacolo e lo "aggiunge" in fondo (fuori, oltre) alla mappa
      */
-    public Obstacle(int width_, int lenght_, Vector<Vector<Point>> map){
+    //aggiunge è virgolettato perché non viene effettivamente aggiunto, ma i suoi punti corrispondono
+    //al fondo della mappa, verrà aggiunto davvero col successivo UpdatePosition()
+    public Obstacle(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
         width = width_;
         lenght = lenght_;
+        speed = speed_;
+        acc = acc_;
 
         // qui inizializzo box
-        int mapw = map.size();                  //la dimensione del vector "esterno"
-        int mapl = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)
-        for(int i=mapw-width;i<mapw;i++){                   //|
+        int mapw = map.size();                  //la dimensione del vector "esterno" (width)
+        int mapl = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)
+        for(int i=mapw;i<mapw+width;i++){                   //|
             Vector<Point> r = new Vector<Point>();          //| la box dell'ostacolo corrisponde agli ultimi
-            for(int j=mapl-lenght;j<mapl;j++){              //| punti in fondo alla mappa, dichiarati come ostacoli
-                r.add(new Point(i, j, '#', false, true));   //|
+            for(int j=mapl;j<mapl+lenght;j++){              //| punti in oltre la mappa, dichiarati come ostacoli
+                r.add(new Point(i, j, false, true));        //| (anche se si potrebbe evitare, sappiamo già che è dentro obvect)
             }
             box.add(r);
         }
@@ -36,9 +33,17 @@ public class Obstacle extends Object{
         newpos = (int)(speed * (time/1000));       //(int) avverte il compilatore che sono
                                                    //consapevole della conversione double->int
 
-        for (Vector<Point> vp : box) {
-            for (Point p : vp) {
-                p.setX(p.getX()-newpos);    // - non + perché si muove da destra verso sinistra
+        //elimino l'ostacolo dalla mappa
+        for (Vector<Point> vm : map) {
+            for (Point pm : vm) {
+                for (Vector<Point> vb : box) {
+                    for (Point pb : vb) {
+                        if(pm == pb){              //domandone da un milione, visto che in java non esiste overload
+                            pm.setChar(' ');       //degli operatori, vedi ==, !=, <, >, eccetera, come capisce se pm==pb?
+                            pm.setObstacle(false);
+                        }
+                    }
+                }
             }
         }
 
@@ -49,23 +54,22 @@ public class Obstacle extends Object{
             }
         }
 
-        //aggiorno la mappa spostando i punti 
-        int mapw = map.size();                  //la dimensione del vector "esterno"
-        int mapl = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)
-
-        Point newp = new Point(0,0);
-        for (Vector<Point> v : map) {
-            for (Point p : v) {
-                if(p.isObstacle()==true){
-                    newp.setChar('#');
-                    newp.setObstacle(true);
-                    p.setChar(' ');
-                    p.setObstacle(false);
+        //reinserisco l'ostacolo spostato
+        for (Vector<Point> vm : map) {
+            for (Point pm : vm) {
+                for (Vector<Point> vb : box) {
+                    for (Point pb : vb) {
+                        if(pm == pb){
+                            pm.setChar('#');
+                            pm.setObstacle(true);
+                        }
+                    }
                 }
-                newp.setX(p.getX()-newpos);
             }
         }
-        return map;
-    }  
-    
+
+        //l'operazione di mettere e togliere l'ostacolo è necassaria, non posso semplicemente svuotare tutta la mappa
+        //perché altrimenti eliminerei anche gli altri ostacoli, pur rimettendone solo uno, di conseguenza, preso un generico
+        //vettore di ostacoli, a ogni Update non ne rimarrebbe che l'ultimo
+    }
 }

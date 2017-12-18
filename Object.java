@@ -10,6 +10,7 @@ public abstract class Object{
     protected int lenght;                     //altezza della box
     protected Vector<Vector<Point>> box;      //rettangolo di punti che rappresenta l'ostacolo
     protected double speed;                   //velocità
+    protected double acc;                     //accelerazione
                                               //abbiamo un problema, servono forse due velocità
                                               //orizontale e verticale, rispettivamente per 
                                               //Character e per Obstacle? Oppure basta questa? 

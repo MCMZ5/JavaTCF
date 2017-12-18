@@ -14,10 +14,9 @@ public class Point{
         ischarcter = false;
         isobstacle = false;
     }
-    public Point(int x_, int y_, char c_, Boolean ischaracter_, Boolean isobstacle_){
+    public Point(int x_, int y_, Boolean ischaracter_, Boolean isobstacle_){
         x = x_;
         y = y_;
-        c = c_;
         ischarcter = ischaracter_;
         isobstacle = isobstacle_;
     }

@@ -22,22 +22,32 @@ public class Player{
      * - inizializza il vettore di ostacoli
      * - inizializza la mappa
      * - riempie la mappa di punti di coordinate 0,0 0,1 0,2 ...
+     * - inizializza il personaggio
      */
     public Player(){
         crashed = false;
         obvect = new Vector<Obstacle>();
         map = new Vector<Vector<Point>>();
-        for(int i=0;i<width;i++){
-            Vector<Point> r = new Vector<Point>();
-            for(int j=0;j<lenght;j++){
+        for(int i=0;i<width;i++){                   //non posso usare un for each perché devo
+            Vector<Point> r = new Vector<Point>();  //riempire con i numeri e perché map all'inizio
+            for(int j=0;j<lenght;j++){              //è vuota
                 r.add(new Point(i,j));
             }
             map.add(r);
         }
+        character = new Character(10,10, 0, -9.81, map);
     }
     /**
      * - aggiorna la posizione del giocatore
      * - aggiorna la posizione di tutti gli ostacoli
+     */
+    private void Update(){
+        map = character.UpdatePosition(map, 42);
+        for (Obstacle o : obvect) {
+            map = o.UpdatePosition(map, 42);
+        }  
+    }
+    /**
      * - disegna tutti i (char dei) punti della mappa 
      */
     private void Draw(){
@@ -46,31 +56,29 @@ public class Player{
             System.out.print("\033[A");     //|  esegue il clear della 
             System.out.print("\033[2K");    //|  schermata prima di ridisegnare
         }                                   //|
-
-        map = character.UpdatePosition(map);
-        for (Obstacle o : obvect) {
-            map = o.UpdatePosition(map);
-        }       
-        for(int i=0;i<width;i++){
-            Vector<Point> r=map.get(i);
-            for(int j=0;j<lenght;j++){
-                System.out.print(r.get(j).getChar()); 
+     
+        for (Vector<Point> v : map) {
+            for (Point p : v) {
+                System.out.print(p.getChar()); 
             }
-            System.out.println(); 
+            System.out.println();
         }
     }
     /**
-     * - per ogni punto di ogni ostacolo verifica se c'è stata
-     * la collisione
+     * - per ogni punto della mappa verifica se c'è stata collisione
      */
     private void CheckCrashed(){
-        for (Obstacle o : obvect) {
-            if(o.CheckCollision()==true){
-                crashed = true;
+        for (Vector<Point> v : map) {
+            for (Point p : v) {
+                if(p.isObstacle()==true && p.isCharacter()==true){
+                    crashed = true;
+                }
             }
         }
     }
     /**
+     * - aggiorna i punti
+     * - controlla le collisioni
      * - disegna la mappa aggiornata
      * - inserisce (se necessario) un nuovo ostacolo nel vettore
      * - aspetta un tempo prefissato prima di rieseguirsi
@@ -79,8 +87,10 @@ public class Player{
     public void Run(){
         int counter; //decide dopo quanti cicli mandare un nuovo ostacolo
         while(crashed == false){
-            counter++;
+            Update();
+            CheckCrashed();
             Draw();
+            counter++;
             if(counter == 10){
                 obvect.add(ObstacleFactory.NewObstacle(map));
                 counter = 0;
