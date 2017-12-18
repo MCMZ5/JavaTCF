@@ -4,6 +4,13 @@ import java.util.Vector;
 
 public class Obstacle extends Object{
 
+    //mi sono fuso, sia il costruttore sia la update sono da rivedere completamente perché non so più cosa fanno
+    //il problema principale è che box e map non possono condividere i punti (non esistono i puntatori), e il 
+    //costruttore di obstacle non può nemmeno disegnare direttamente sulla mappa (non esiste il passaggio by reference)
+    //l'unica soluzione che mi pare al momento plausibile è delegare il disegno degli ostacoli a Game (ovvero al main)
+    //o trasformare map e/o obvect (del main) in classi a sé stanti (tuttavia ci ho provato e ho ottenuto scarsi risultati
+    //in termini di semplicità, quindi non credo sia la soluzione migliore)
+
     /**
      * - dati i parametri, costruisce la box dell'ostacolo
      */
