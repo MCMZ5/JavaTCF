@@ -68,6 +68,8 @@ public class Obstacle extends Object{
             }
         }
 
+        return map;
+
         //l'operazione di mettere e togliere l'ostacolo è necassaria, non posso semplicemente svuotare tutta la mappa
         //perché altrimenti eliminerei anche gli altri ostacoli, pur rimettendone solo uno, di conseguenza, preso un generico
         //vettore di ostacoli, a ogni Update non ne rimarrebbe che l'ultimo

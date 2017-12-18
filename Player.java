@@ -85,7 +85,7 @@ public class Player{
      * - esce quando il giocatore si schianta
      */
     public void Run(){
-        int counter; //decide dopo quanti cicli mandare un nuovo ostacolo
+        int counter = 0; //decide dopo quanti cicli mandare un nuovo ostacolo
         while(crashed == false){
             Update();
             CheckCrashed();

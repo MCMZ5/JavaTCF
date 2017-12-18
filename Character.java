@@ -9,7 +9,7 @@ public class Character extends Object{
      */
     //aggiunge è virgolettato perché non viene effettivamente aggiunto, ma i suoi punti corrispondono
     //al fondo della mappa, verrà aggiunto davvero col successivo UpdatePosition()
-    public Chracter(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
+    public Character(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
         width = width_;
         lenght = lenght_;
         speed = speed_;
@@ -20,7 +20,7 @@ public class Character extends Object{
         int mapl = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)
         for(int i=0;i<width;i++){                           //|
             Vector<Point> r = new Vector<Point>();          //| la box del personaggio corrisponde ai primi
-            for(int j=mapl;j>mapl-lenght;j--)               //| punti della mappa, dichiarati come personaggio
+            for(int j=mapl;j>mapl-lenght;j--){              //| punti della mappa, dichiarati come personaggio
                 r.add(new Point(i, j, true, false));        //| (anche se si potrebbe evitare)
             }
             box.add(r);
@@ -72,6 +72,8 @@ public class Character extends Object{
                 }
             }
         }
+
+        return map;
 
         //l'operazione di mettere e togliere l'ostacolo è necassaria, non posso semplicemente svuotare tutta la mappa
         //perché altrimenti eliminerei anche gli altri ostacoli, pur rimettendone solo uno, di conseguenza, preso un generico
