@@ -82,7 +82,7 @@ public class Player{
             counter++;
             Draw();
             if(counter == 10){
-                obvect.add(ObstacleFactory.NewObstacle());
+                obvect.add(ObstacleFactory.NewObstacle(map));
                 counter = 0;
             }
             Thread.sleep(41); //41 millisecondi dovrebbero essere 1/24 di secondo
