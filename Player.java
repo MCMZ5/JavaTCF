@@ -8,8 +8,8 @@ public class Player{
 
     private String name;                        //nome del giocatore
     private Boolean crashed;                    //bool se si è schiantato contro un ostacolo        
-    private int width;                          //larghezza della mappa
-    private int lenght;                         //altezza della mappa
+    private int width=20;                          //larghezza della mappa
+    private int lenght=20;                         //altezza della mappa
     private Vector<Vector<Point>> map;          //mappa di gioco, rettangolo di punti
     private Vector<Obstacle> obvect;            //vettore contenente tutti gli ostacoli
     private Character character;                //è il nostro personaggio, un derivato al pari degli ostacoli
@@ -25,6 +25,7 @@ public class Player{
      * - inizializza il personaggio
      */
     public Player(){
+
         crashed = false;
         obvect = new Vector<Obstacle>();
         map = new Vector<Vector<Point>>();
@@ -95,7 +96,14 @@ public class Player{
                 obvect.add(ObstacleFactory.NewObstacle(map));
                 counter = 0;
             }
-            Thread.sleep(41); //41 millisecondi dovrebbero essere 1/24 di secondo
+            try{
+                Thread.sleep(41); //41 millisecondi dovrebbero essere 1/24 di secondo
+                throw new InterruptedException();
+         
+            }
+            catch(InterruptedException e){
+
+            }
         }
         System.out.println("Ti sei schiantato!");
     }
