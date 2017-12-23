@@ -13,9 +13,9 @@ public class ObstacleFactory{
      */
     public static Obstacle NewObstacle(Vector<Vector<Point>> map){
         Random rand = new Random();
-        int width = rand.nextInt(10-4) + 4;                 //nmax 10, nmin 4
-        int lenght = rand.nextInt(4-1) + 1;                 //nmax 4, nmin 1
-        double speed = rand.nextDouble() * (8.-2.) + 2.;    //nmax 8, nmin 2
+        int width = rand.nextInt(4-1) + 1;                  //nmax 4, nmin 1
+        int lenght = rand.nextInt(10-4) + 4;                //nmax 10, nmin 4
+        double speed = rand.nextDouble() * (10.-4.) + 4.;   //nmax 10, nmin 4
         double acc = rand.nextDouble() * (2.-.5) + .5;      //nmax 2, nmin 0.5
         Obstacle obs = new Obstacle(width, lenght, speed, acc, map);
         return obs;

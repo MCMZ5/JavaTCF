@@ -8,8 +8,8 @@ public class Player{
 
     private String name;                        //nome del giocatore
     private Boolean crashed;                    //bool se si è schiantato contro un ostacolo        
-    private int width=20;                          //larghezza della mappa
-    private int lenght=20;                         //altezza della mappa
+    private int lenght=10;                          //larghezza della mappa
+    private int width=60;                         //altezza della mappa
     private Vector<Vector<Point>> map;          //mappa di gioco, rettangolo di punti
     private Vector<Obstacle> obvect;            //vettore contenente tutti gli ostacoli
     private Character character;                //è il nostro personaggio, un derivato al pari degli ostacoli
@@ -29,23 +29,23 @@ public class Player{
         crashed = false;
         obvect = new Vector<Obstacle>();
         map = new Vector<Vector<Point>>();
-        for(int i=0;i<width;i++){                   //non posso usare un for each perché devo
+        for(int i=0;i<lenght;i++){                   //non posso usare un for each perché devo
             Vector<Point> r = new Vector<Point>();  //riempire con i numeri e perché map all'inizio
-            for(int j=0;j<lenght;j++){              //è vuota
+            for(int j=0;j<width;j++){              //è vuota
                 r.add(new Point(i,j));
             }
             map.add(r);
         }
-        character = new Character(10,10, 0, -9.81, map);
+        character = new Character(8,4, 0, -9.81, map);
     }
     /**
      * - aggiorna la posizione del giocatore
      * - aggiorna la posizione di tutti gli ostacoli
      */
     private void Update(){
-        map = character.UpdatePosition(map, 42);
+        character.UpdatePosition(map, 1000);
         for (Obstacle o : obvect) {
-            map = o.UpdatePosition(map, 42);
+            o.UpdatePosition(map, 1000);
         }  
     }
     /**
@@ -92,12 +92,12 @@ public class Player{
             CheckCrashed();
             Draw();
             counter++;
-            if(counter == 10){
+            if(counter == 3){
                 obvect.add(ObstacleFactory.NewObstacle(map));
                 counter = 0;
             }
             try{
-                Thread.sleep(41); //41 millisecondi dovrebbero essere 1/24 di secondo
+                Thread.sleep(1000); //41 millisecondi dovrebbero essere 1/24 di secondo
                 throw new InterruptedException();
          
             }
