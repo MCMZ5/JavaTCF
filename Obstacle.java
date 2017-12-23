@@ -14,16 +14,17 @@ public class Obstacle extends Object{
         lenght = lenght_;
         speed = speed_;
         acc = acc_;
+        box = new Vector<Vector<Point>>();
 
         // qui inizializzo box
         int mapw = map.size();                  //la dimensione del vector "esterno" (width)
         int mapl = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)
-        for(int i=mapw;i<mapw+width;i++){                   //|
-            Vector<Point> r = new Vector<Point>();          //| la box dell'ostacolo corrisponde agli ultimi
-            for(int j=mapl;j<mapl+lenght;j++){              //| punti in oltre la mappa, dichiarati come ostacoli
-                r.add(new Point(i, j, false, true));        //| (anche se si potrebbe evitare, sappiamo già che è dentro obvect)
+        for(int i=mapw-1;i>mapw-width;i--){                           //|
+            Vector<Point> r = new Vector<Point>();          //| la box del personaggio corrisponde ai primi
+            for(int j=mapl-1;j>mapl-lenght;j--){               //| punti della mappa, dichiarati come personaggio
+                r.add(map.get(i).get(j));//new Point(i, j, true, false));        //| (anche se si potrebbe evitare)
             }
-            box.add(r);
+            box.add(r); 
         }
     }
     public Vector<Vector<Point>> UpdatePosition(Vector<Vector<Point>> map, double time){

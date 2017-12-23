@@ -14,16 +14,19 @@ public class Character extends Object{
         lenght = lenght_;
         speed = speed_;
         acc = acc_;
-
+        box = new Vector<Vector<Point>>();
+        
         // qui inizializzo box
         int mapw = map.size();                  //la dimensione del vector "esterno" (width)
+        
         int mapl = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)
-        for(int i=0;i<width;i++){                           //|
+
+        for(int i=mapw-1;i>mapw-width;i--){                           //|
             Vector<Point> r = new Vector<Point>();          //| la box del personaggio corrisponde ai primi
-            for(int j=mapl;j>mapl-lenght;j--){              //| punti della mappa, dichiarati come personaggio
-                r.add(new Point(i, j, true, false));        //| (anche se si potrebbe evitare)
+            for(int j=0;j<lenght;j++){               //| punti della mappa, dichiarati come personaggio
+                r.add(map.get(i).get(j));//new Point(i, j, true, false));        //| (anche se si potrebbe evitare)
             }
-            box.add(r);
+            box.add(r); 
         }
     }
     public Vector<Vector<Point>> UpdatePosition(Vector<Vector<Point>> map, double time){
@@ -35,43 +38,32 @@ public class Character extends Object{
                                                                                         //consapevole della conversione double->int
 
         //elimino l'ostacolo dalla mappa
-        for (Vector<Point> vm : map) {
-            for (Point pm : vm) {
-                for (Vector<Point> vb : box) {
-                    for (Point pb : vb) {
-                        if(pm == pb){              //domandone da un milione, visto che in java non esiste overload
-                            pm.setChar(' ');       //degli operatori, vedi ==, !=, <, >, eccetera, come capisce se pm==pb?
-                            pm.setCharacter(false);
-                        }
-                    }
-                }
-            }
-        }
+        box.removeAllElements();
+        int mapl = map.firstElement().size();
+        int mapw = map.size();
 
         //sposto i punti della box del personaggio                                                   
-        for (Vector<Point> vp : box) {
-            for (Point p : vp) {
-                p.setY(p.getY()-newpos);    //in questo caso la y è + newpos, se newpos è positivo (velocità positiva, ascesa)
-            }                               //il personaggio sale, se newpos è negativo (velocità negativa, discesa) il 
-        }                                   //personaggio scende
+        for(int i=mapw-1;i>mapw-width;i--){                           //|
+            Vector<Point> r = new Vector<Point>();          //| la box del personaggio corrisponde ai primi
+            for(int j=0;j<lenght;j++){               //| punti della mappa, dichiarati come personaggio
+                r.add(map.get(i).get(j));//new Point(i, j, true, false));        //| (anche se si potrebbe evitare)
+            }
+            box.add(r); 
+        }                             //personaggio scende
                                             //infatti ricordiamo che la mappa è del tipo
                                             //0,0   0,1   0,2   ...
                                             //1,0   1,1   1,2   ...
                                             //n,0   n,1   ...   n,n
 
         //reinserisco il personaggio spostato
-        for (Vector<Point> vm : map) {
-            for (Point pm : vm) {
-                for (Vector<Point> vb : box) {
-                    for (Point pb : vb) {
-                        if(pm == pb){
-                            pm.setChar('@');
-                            pm.setCharacter(true);
-                        }
-                    }
-                }
+        for (Vector<Point> vb : box) {
+            for (Point pb : vb) {
+                pb.setCharacter(true);
             }
         }
+                
+            
+        
 
         return map;
 
