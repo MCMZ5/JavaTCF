@@ -15,6 +15,7 @@ public class Obstacle extends Object{
         speed = speed_;
         acc = acc_;
         box = new Vector<Vector<Point>>();
+        x = 0;
 
         // qui inizializzo box
         int mapl = map.size();                  //la dimensione del vector "esterno" (width)
@@ -31,23 +32,39 @@ public class Obstacle extends Object{
     public void UpdatePosition(Vector<Vector<Point>> map, double time){
         
         //per il momento non si considerano accelerazioni e si calcola per MRU
-        int newpos = 0;
-        newpos = (int)(speed * (time/1000));       //(int) avverte il compilatore che sono
+        int mapl = map.firstElement().size();
+        int mapw = map.size();
+        int newx = mapl;
+        int newy = mapw;
+        x = x + (speed * (time/1000));
+        newx = mapl - (int)(x);       //(int) avverte il compilatore che sono
                                                    //consapevole della conversione double->int
+        //System.out.println("speed: "+speed+" time: "+time+" newx: "+newx);
+        //elimino l'ostacolo dalla mappa
+        for (Vector<Point> vb : box) {
+            for (Point pb : vb) {
+                pb.setObstacle(false);
+            }
+        }
+        box.removeAllElements();
 
-        int mapl = map.size();                  //la dimensione del vector "esterno" (width)
-        int mapw = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)                                           
+        //sposto i punti della box del personaggio                                                   
+        for(int i=newy-1;i>newy-width;i--){                           //|
+            Vector<Point> r = new Vector<Point>();          //| la box del personaggio corrisponde ai primi
+            for(int j=newx-1;j>newx-lenght;j--){               //| punti della mappa, dichiarati come personaggio
+                r.add(map.get(i).get(j));//new Point(i, j, true, false));        //| (anche se si potrebbe evitare)
+            }
+            box.add(r); 
+        }                             //personaggio scende
+                                            //infatti ricordiamo che la mappa è del tipo
+                                            //0,0   0,1   0,2   ...
+                                            //1,0   1,1   1,2   ...
+                                            //n,0   n,1   ...   n,n
 
-        //box.removeAllElements();
-
-        for (Vector<Point> vm : map) {
-            for (int i=0; i<mapw; i++){
-                if(vm.get(i).isObstacle() == true){
-                    vm.get(i).setObstacle(false);
-                    vm.get(i).setChar(' ');
-                    vm.get(i-newpos).setObstacle(true);
-                    vm.get(i-newpos).setChar('#');
-                }
+        //reinserisco l'ostacolo spostato
+        for (Vector<Point> vb : box) {
+            for (Point pb : vb) {
+                pb.setObstacle(true);
             }
         }
 
