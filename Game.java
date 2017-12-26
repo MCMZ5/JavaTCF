@@ -11,6 +11,7 @@ public class Game{
         System.out.print("\033[A");
         System.out.print("\033[2K");
         System.out.println("Gioco terminato!");
+        System.out.print("\033[0m");
 
         System.exit(0);
 

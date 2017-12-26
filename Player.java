@@ -156,7 +156,7 @@ public class Player{
         for(int i=0; i<width/2; i++){        //|
             System.out.print("\033[C");  
         }     
-        System.out.println("Ti sei schiantato!");
+        System.out.println("\033[7mTi sei schiantato!");
         for(int i=0; i<(lenght+4)/2; i++){        //|
             System.out.print("\033[B");  
         } 
