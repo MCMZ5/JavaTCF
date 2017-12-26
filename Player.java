@@ -54,10 +54,17 @@ public class Player{
      */
     private void Draw(){
 
-        for(int i=0; i<lenght; i++){        //|
-            System.out.print("\033[A");     //|  esegue il clear della 
-            //System.out.print("\033[2K");  //|  schermata prima di ridisegnare
+        for(int i=0; i<lenght+4; i++){        //|
+            System.out.print("\033[A");  
         }                                   //|
+
+        System.out.print("PHYSICS RUN"); 
+        System.out.println(); 
+
+        for(int i=0; i<width; i++){        //|
+            System.out.print("-");  
+        }  
+        System.out.println();    
      
         for (Vector<Point> v : map) {
             for (Point p : v) {
@@ -65,7 +72,14 @@ public class Player{
             }
             System.out.println();
         }
+        for(int i=0; i<width; i++){        //|
+            System.out.print("-");  
+        }  
+        System.out.println(); 
+        System.out.print("Premere ENTER per saltare");     
+        System.out.println();  
     }
+
     /**
      * - per ogni punto della mappa verifica se c'è stata collisione
      */
@@ -136,7 +150,20 @@ public class Player{
 
             // }
         }
+        for(int i=0; i<(lenght+4)/2; i++){        //|
+            System.out.print("\033[A");  
+        } 
+        for(int i=0; i<width/2; i++){        //|
+            System.out.print("\033[C");  
+        }     
         System.out.println("Ti sei schiantato!");
+        for(int i=0; i<(lenght+4)/2; i++){        //|
+            System.out.print("\033[B");  
+        } 
+        for(int i=0; i<width/2; i++){        //|
+            System.out.print("\033[D");  
+        }     
+
     }
 
 }
