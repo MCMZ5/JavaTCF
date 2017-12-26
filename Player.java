@@ -36,7 +36,7 @@ public class Player{
             }
             map.add(r);
         }
-        character = new Character(8,4, 0, -9.81, map);
+        character = new Character(8,4, 0, 0, map);
     }
     /**
      * - aggiorna la posizione del giocatore

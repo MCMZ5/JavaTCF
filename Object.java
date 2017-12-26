@@ -12,6 +12,7 @@ public abstract class Object{
     protected double speed;                   //velocità
     protected double acc;                     //accelerazione
     protected double x;
+    protected double y;
                                               //abbiamo un problema, servono forse due velocità
                                               //orizontale e verticale, rispettivamente per 
                                               //Character e per Obstacle? Oppure basta questa? 
