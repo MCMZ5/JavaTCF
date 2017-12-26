@@ -121,12 +121,14 @@ public class Player{
     }
     public void Run(){
         int counter = 0; //decide dopo quanti cicli mandare un nuovo ostacolo
+        int score = 0;
         while(crashed == false){
             Update();
             CheckCrashed();
             Draw();
             Thread key = new Thread(new Key(character));
             counter++;
+            score++;
             if(counter == 50){
                 obvect.add(ObstacleFactory.NewObstacle(map));
                 counter = 0;
@@ -157,7 +159,11 @@ public class Player{
             System.out.print("\033[C");  
         }     
         System.out.println("\033[7mTi sei schiantato!");
-        for(int i=0; i<(lenght+4)/2; i++){        //|
+        for(int i=0; i<width/2; i++){        //|
+            System.out.print("\033[C");  
+        }     
+        System.out.println("    Score: "+score+"    ");
+        for(int i=0; i<((lenght+4)/2)-1; i++){        //|
             System.out.print("\033[B");  
         } 
         for(int i=0; i<width/2; i++){        //|
