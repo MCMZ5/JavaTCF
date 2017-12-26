@@ -96,7 +96,9 @@ public class Player{
                 //System.out.println("Passing");
                 System.in.read();
                 System.out.print("\033[A");
-                character.setSpeed(14.);
+                if(character.getIntPosY()==0){
+                    character.setSpeed(14.);
+                }
             }
             catch(IOException e){
             }
@@ -117,7 +119,7 @@ public class Player{
             }
             key.start();
             try{
-                key.join(40);
+                key.join(50);
                 throw new InterruptedException();
             }
             catch(InterruptedException e){

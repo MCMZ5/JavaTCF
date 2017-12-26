@@ -38,6 +38,7 @@ public class Character extends Object{
         y = y + ((speed * (time/1000))+(.5 * acc * (time/1000) * (time/1000)));
         if(y<0){
             y=0;
+            speed = 0;
         }
         newpos = (int)y;   //(int) avverte il compilatore che sono
                                                                                         //consapevole della conversione double->int
@@ -77,6 +78,9 @@ public class Character extends Object{
     }
     public void setSpeed(double speed_){
         speed = speed_;
+    }
+    public int getIntPosY(){
+        return (int)y;
     }
 }
 
