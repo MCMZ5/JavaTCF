@@ -8,7 +8,7 @@ public class Player{
 
     private String name;                        //nome del giocatore
     private Boolean crashed;                    //bool se si è schiantato contro un ostacolo        
-    private int lenght=10;                          //larghezza della mappa
+    private int lenght=20;                          //larghezza della mappa
     private int width=60;                         //altezza della mappa
     private Vector<Vector<Point>> map;          //mappa di gioco, rettangolo di punti
     private Vector<Obstacle> obvect;            //vettore contenente tutti gli ostacoli
@@ -43,9 +43,9 @@ public class Player{
      * - aggiorna la posizione di tutti gli ostacoli
      */
     private void Update(){
-        character.UpdatePosition(map, 1000);
+        character.UpdatePosition(map, 42);
         for (Obstacle o : obvect) {
-            o.UpdatePosition(map, 1000);
+            o.UpdatePosition(map, 42);
         }  
     }
     /**

@@ -12,7 +12,7 @@ public class Character extends Object{
     public Character(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
         width = width_;
         lenght = lenght_;
-        speed = speed_;
+        speed = 10;//speed_;
         acc = -9.81+acc_;
         box = new Vector<Vector<Point>>();
         y = 0;
@@ -53,7 +53,7 @@ public class Character extends Object{
 
 
         //sposto i punti della box del personaggio                                                   
-        for(int i=mapl-newpos;i>mapl-lenght;i--){                               
+        for(int i=mapl-newpos;i>mapl-newpos-lenght;i--){                               
             Vector<Point> r = new Vector<Point>();         
             for(int j=0;j<width;j++){               
                 r.add(map.get(i).get(j));
