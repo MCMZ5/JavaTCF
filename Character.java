@@ -12,8 +12,8 @@ public class Character extends Object{
     public Character(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
         width = width_;
         lenght = lenght_;
-        speed = 10;//speed_;
-        acc = -9.81+acc_;
+        speed = 0;
+        acc = -9.81;
         box = new Vector<Vector<Point>>();
         y = 0;
         
@@ -74,6 +74,9 @@ public class Character extends Object{
     }
     public void setAcc(double acc_){
         acc = -9.81 + acc_;
+    }
+    public void setSpeed(double speed_){
+        speed = speed_;
     }
 }
 

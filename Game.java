@@ -8,6 +8,7 @@ public class Game{
 
         System.out.println("Gioco terminato!");
 
+        System.exit(0);
 
     }
 }

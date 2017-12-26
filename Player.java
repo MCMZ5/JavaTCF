@@ -1,6 +1,7 @@
 package endlessrunningtcf;
 
 import java.util.Vector;
+import java.io.IOException;
 
 public class Player{
 
@@ -9,7 +10,7 @@ public class Player{
     private String name;                        //nome del giocatore
     private Boolean crashed;                    //bool se si è schiantato contro un ostacolo        
     private int lenght=20;                          //larghezza della mappa
-    private int width=60;                         //altezza della mappa
+    private int width=130;                         //altezza della mappa
     private Vector<Vector<Point>> map;          //mappa di gioco, rettangolo di punti
     private Vector<Obstacle> obvect;            //vettore contenente tutti gli ostacoli
     private Character character;                //è il nostro personaggio, un derivato al pari degli ostacoli
@@ -43,9 +44,9 @@ public class Player{
      * - aggiorna la posizione di tutti gli ostacoli
      */
     private void Update(){
-        character.UpdatePosition(map, 42);
+        character.UpdatePosition(map, 50);
         for (Obstacle o : obvect) {
-            o.UpdatePosition(map, 42);
+            o.UpdatePosition(map, 50);
         }  
     }
     /**
@@ -55,7 +56,7 @@ public class Player{
 
         for(int i=0; i<lenght; i++){        //|
             System.out.print("\033[A");     //|  esegue il clear della 
-            System.out.print("\033[2K");    //|  schermata prima di ridisegnare
+            //System.out.print("\033[2K");  //|  schermata prima di ridisegnare
         }                                   //|
      
         for (Vector<Point> v : map) {
@@ -85,25 +86,53 @@ public class Player{
      * - aspetta un tempo prefissato prima di rieseguirsi
      * - esce quando il giocatore si schianta
      */
+    public static class Key implements Runnable{
+        Character character;
+        Key(Character character_){
+            character = character_;
+        }
+        public void run() {
+            try{
+                //System.out.println("Passing");
+                System.in.read();
+                System.out.print("\033[A");
+                character.setSpeed(14.);
+            }
+            catch(IOException e){
+            }
+            //System.out.println("Passed");
+        }
+    }
     public void Run(){
         int counter = 0; //decide dopo quanti cicli mandare un nuovo ostacolo
         while(crashed == false){
             Update();
             CheckCrashed();
             Draw();
+            Thread key = new Thread(new Key(character));
             counter++;
-            if(counter == 3){
+            if(counter == 50){
                 obvect.add(ObstacleFactory.NewObstacle(map));
                 counter = 0;
             }
+            key.start();
             try{
-                Thread.sleep(1000); //41 millisecondi dovrebbero essere 1/24 di secondo
+                key.join(40);
                 throw new InterruptedException();
-         
             }
             catch(InterruptedException e){
-
             }
+            if(key.isAlive()){
+                key.interrupt();
+            }
+            // try{
+            //     Thread.sleep(50); //41 millisecondi dovrebbero essere 1/24 di secondo
+            //     throw new InterruptedException();
+         
+            // }
+            // catch(InterruptedException e){
+
+            // }
         }
         System.out.println("Ti sei schiantato!");
     }
