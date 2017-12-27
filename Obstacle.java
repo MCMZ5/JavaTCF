@@ -13,12 +13,12 @@ public class Obstacle extends Object{
         width = width_;
         lenght = lenght_;
         speed = speed_;
-        speedy = 0;
+        speedy = 10.;
         acc = acc_;
-        accy = 0;
+        accy = -9.81;
         box = new Vector<Vector<Point>>();
         x = 0;
-        y = map.firstElement().size()-1;
+        y = 0;
 
         // qui inizializzo box
         int mapl = map.size()-1;                  //la dimensione del vector "esterno" (width)
@@ -44,13 +44,19 @@ public class Obstacle extends Object{
         y = y + ((speedy * (time/1000))+(.5 * accy * (time/1000) * (time/1000)));
         speed = speed + (acc * (time/1000));
         x = x + ((speed * (time/1000))+(.5 * acc * (time/1000) * (time/1000)));
-        //newy = mapw - (int)(y);  
+        newy = mapw - (int)(y);  
         newx = mapl - (int)(x);       //(int) avverte il compilatore che sono
                                                    //consapevole della conversione double->int
         //System.out.println("speed: "+speed+" time: "+time+" newx: "+newx);
         //elimino l'ostacolo dalla mappa
         if(newx-lenght<0){
             lenght=newx;
+        }
+        if(newy-width<0){
+            width=newy;
+        }
+        if(y==0 || y<0){
+            speedy = -speedy;
         }
         //if(lenght=0){
             //this.~Obstacle(); //elimino l'ostacolo (come???)
