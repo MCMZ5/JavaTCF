@@ -162,7 +162,7 @@ public class Player{
         for(int i=0; i<width/2; i++){        //|
             System.out.print("\033[C");  
         }     
-        System.out.println("    Score: "+score+"    ");
+        System.out.printf("   Score: %05d   %n",score);
         for(int i=0; i<((lenght+4)/2)-1; i++){        //|
             System.out.print("\033[B");  
         } 
