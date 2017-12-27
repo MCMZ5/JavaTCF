@@ -10,7 +10,9 @@ public abstract class Object{
     protected int lenght;                     //altezza della box
     protected Vector<Vector<Point>> box;      //rettangolo di punti che rappresenta l'ostacolo
     protected double speed;                   //velocità
+    protected double speedy;
     protected double acc;                     //accelerazione
+    protected double accy; 
     protected double x;
     protected double y;
                                               //abbiamo un problema, servono forse due velocità
