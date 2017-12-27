@@ -54,17 +54,9 @@ public class Player{
      */
     private void Draw(){
 
-        for(int i=0; i<lenght+4; i++){        //|
+        for(int i=0; i<lenght; i++){        //|
             System.out.print("\033[A");  
         }                                   //|
-
-        System.out.print("PHYSICS RUN"); 
-        System.out.println(); 
-
-        for(int i=0; i<width; i++){        //|
-            System.out.print("-");  
-        }  
-        System.out.println();    
      
         for (Vector<Point> v : map) {
             for (Point p : v) {
@@ -72,12 +64,6 @@ public class Player{
             }
             System.out.println();
         }
-        for(int i=0; i<width; i++){        //|
-            System.out.print("-");  
-        }  
-        System.out.println(); 
-        System.out.print("Premere ENTER per saltare");     
-        System.out.println();  
     }
 
     /**
@@ -172,4 +158,13 @@ public class Player{
 
     }
 
+    public int getWidth(){
+    return width;
+    }
+
+    public int getLenght(){
+        return lenght;
+    }
+
 }
+
