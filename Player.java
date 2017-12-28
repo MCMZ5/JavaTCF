@@ -59,12 +59,14 @@ public class Player{
         }                                   //|
      
         for (Vector<Point> v : map) {
+            System.out.print("|");
             for (Point p : v) {
                 System.out.print(p.getChar()); 
                 if(p.isObstacle()==true && p.isCharacter()==true){
                     crashed = true;
                 }
             }
+            System.out.print("|");
             System.out.println();
         }
     }
