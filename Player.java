@@ -61,6 +61,9 @@ public class Player{
         for (Vector<Point> v : map) {
             for (Point p : v) {
                 System.out.print(p.getChar()); 
+                if(p.isObstacle()==true && p.isCharacter()==true){
+                    crashed = true;
+                }
             }
             System.out.println();
         }
@@ -110,7 +113,7 @@ public class Player{
         int score = 0;
         while(crashed == false){
             Update();
-            CheckCrashed();
+            //CheckCrashed();
             Draw();
             Thread key = new Thread(new Key(character));
             counter++;
