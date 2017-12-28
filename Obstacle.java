@@ -9,16 +9,16 @@ public class Obstacle extends Object{
      */
     //aggiunge è virgolettato perché non viene effettivamente aggiunto, ma i suoi punti corrispondono
     //al fondo della mappa, verrà aggiunto davvero col successivo UpdatePosition()
-    public Obstacle(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
+    public Obstacle(int y_, int width_, int lenght_, double speed_,double speedy_, double acc_, Vector<Vector<Point>> map){
         width = width_;
         lenght = lenght_;
         speed = speed_;
-        speedy = 10.;
+        speedy = speedy_;
         acc = acc_;
         accy = -9.81;
         box = new Vector<Vector<Point>>();
         x = 0;
-        y = 0;
+        y = y_;
 
         // qui inizializzo box
         int mapl = map.size()-1;                  //la dimensione del vector "esterno" (width)
