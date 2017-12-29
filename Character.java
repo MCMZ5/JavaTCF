@@ -3,6 +3,9 @@ package endlessrunningtcf;
 import java.util.Vector;
 
 public class Character extends Object{
+
+    private boolean[][] icon = {{false,false,false,true,true,false,false,false},{false,true,true,true,true,true,true,false},
+    {false,false,true,true,true,true,false,false},{false,false,true,false,false,true,false,false}};
     
     /**
      * - dati i parametri, costruisce la box dell'ostacolo e lo "aggiunge" in fondo (fuori, oltre) alla mappa
@@ -16,6 +19,7 @@ public class Character extends Object{
         acc = -9.81;
         box = new Vector<Vector<Point>>();
         y = 0;
+        
         
         // qui inizializzo box
         int mapl = map.size()-1;                  //la dimensione del vector "esterno" (width)
@@ -38,7 +42,6 @@ public class Character extends Object{
         y = y + ((speed * (time/1000))+(.5 * acc * (time/1000) * (time/1000)));
         if(y<0){
             y=0;
-            speed = 0;
         }
         newpos = (int)y;   //(int) avverte il compilatore che sono
                                                                                         //consapevole della conversione double->int
@@ -51,14 +54,17 @@ public class Character extends Object{
         box.removeAllElements();
         int mapw = map.firstElement().size() -1;
         int mapl = map.size() -1;
-
+        int k=lenght-1;
 
         //sposto i punti della box del personaggio                                                   
         for(int i=mapl-newpos;i>mapl-newpos-lenght;i--){                               
             Vector<Point> r = new Vector<Point>();         
-            for(int j=0;j<width;j++){               
-                r.add(map.get(i).get(j));
+            for(int j=0;j<width;j++){  
+                if(icon[k][j]==true){           
+                    r.add(map.get(i).get(j));
+                }
             }
+            k--;
             box.add(r); 
         }            
 
