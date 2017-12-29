@@ -143,18 +143,18 @@ public class Player{
 
             // }
         }
-        for(int i=0; i<(lenght+4)/2; i++){        //|
+        for(int i=0; i<((lenght+4)/2)-1; i++){        //|
             System.out.print("\033[A");  
         } 
-        for(int i=0; i<width/2; i++){        //|
+        for(int i=0; i<(width/2)-5; i++){        //|
             System.out.print("\033[C");  
         }     
         System.out.println("\033[7mTi sei schiantato!");
-        for(int i=0; i<width/2; i++){        //|
+        for(int i=0; i<(width/2)-5; i++){        //|
             System.out.print("\033[C");  
         }     
         System.out.printf("   Score: %05d   %n",score);
-        for(int i=0; i<((lenght+4)/2)-1; i++){        //|
+        for(int i=0; i<((lenght+4)/2)-2; i++){        //|
             System.out.print("\033[B");  
         } 
         for(int i=0; i<width/2; i++){        //|
