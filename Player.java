@@ -44,10 +44,15 @@ public class Player{
      * - aggiorna la posizione di tutti gli ostacoli
      */
     private void Update(){
-        character.UpdatePosition(map, 50);
-        for (Obstacle o : obvect) {
-            o.UpdatePosition(map, 50);
-        }  
+        try{
+            character.UpdatePosition(map, 50);
+            for (Obstacle o : obvect) {
+                o.UpdatePosition(map, 50);
+            }  
+        }
+        catch(ArrayIndexOutOfBoundsException exc){
+            obvect.remove(obvect.size()-1);
+        }
     }
     /**
      * - disegna tutti i (char dei) punti della mappa 
