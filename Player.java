@@ -123,17 +123,17 @@ public class Player{
         int counter = 0; //decide dopo quanti cicli mandare un nuovo ostacolo
         int score = 0;
         while(crashed == false){
+            Thread key = new Thread(new Key(character));
             Update();
             CheckCrashed();
+            key.start();
             Draw();
-            Thread key = new Thread(new Key(character));
             counter++;
             score++;
             if(counter == 50){
                 obvect.add(ObstacleFactory.NewObstacle(map));
                 counter = 0;
             }
-            key.start();
             try{
                 key.join(50);
                 throw new InterruptedException();
