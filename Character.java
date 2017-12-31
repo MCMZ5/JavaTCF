@@ -12,71 +12,76 @@ public class Character extends Object{
     public Character(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
         width = width_;
         lenght = lenght_;
-        speed = speed_;
-        acc = acc_;
-
+        speed = 0;
+        acc = -9.81;
+        box = new Vector<Vector<Point>>();
+        y = 0;
+        
         // qui inizializzo box
-        int mapw = map.size();                  //la dimensione del vector "esterno" (width)
-        int mapl = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)
-        for(int i=0;i<width;i++){                           //|
-            Vector<Point> r = new Vector<Point>();          //| la box del personaggio corrisponde ai primi
-            for(int j=mapl;j>mapl-lenght;j--){              //| punti della mappa, dichiarati come personaggio
-                r.add(new Point(i, j, true, false));        //| (anche se si potrebbe evitare)
+        int mapl = map.size()-1;                  //la dimensione del vector "esterno" (width)
+        
+        int mapw = map.firstElement().size()-1;   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)
+
+        for(int i=mapl;i>mapl-lenght;i--){                 
+            Vector<Point> r = new Vector<Point>();          
+            for(int j=0;j<width;j++){              
+                r.add(map.get(i).get(j));
             }
-            box.add(r);
+            box.add(r); 
         }
     }
-    public Vector<Vector<Point>> UpdatePosition(Vector<Vector<Point>> map, double time){
+    public void UpdatePosition(Vector<Vector<Point>> map, double time){
         
         //calcolo per MRUA iniziato ma non terminato
         int newpos = 0;
         speed = speed + (acc * (time/1000));
-        newpos = (int)((speed * (time/1000))+(.5 * acc * (time/1000) * (time/1000)));   //(int) avverte il compilatore che sono
+        y = y + ((speed * (time/1000))+(.5 * acc * (time/1000) * (time/1000)));
+        if(y<0){
+            y=0;
+            speed = 0;
+        }
+        newpos = (int)y;   //(int) avverte il compilatore che sono
                                                                                         //consapevole della conversione double->int
-
         //elimino l'ostacolo dalla mappa
-        for (Vector<Point> vm : map) {
-            for (Point pm : vm) {
-                for (Vector<Point> vb : box) {
-                    for (Point pb : vb) {
-                        if(pm == pb){              //domandone da un milione, visto che in java non esiste overload
-                            pm.setChar(' ');       //degli operatori, vedi ==, !=, <, >, eccetera, come capisce se pm==pb?
-                            pm.setCharacter(false);
-                        }
-                    }
-                }
+        for (Vector<Point> vb : box) {
+            for (Point pb : vb) {
+                pb.setCharacter(false);
             }
         }
+        box.removeAllElements();
+        int mapw = map.firstElement().size() -1;
+        int mapl = map.size() -1;
+
 
         //sposto i punti della box del personaggio                                                   
-        for (Vector<Point> vp : box) {
-            for (Point p : vp) {
-                p.setY(p.getY()-newpos);    //in questo caso la y è + newpos, se newpos è positivo (velocità positiva, ascesa)
-            }                               //il personaggio sale, se newpos è negativo (velocità negativa, discesa) il 
-        }                                   //personaggio scende
-                                            //infatti ricordiamo che la mappa è del tipo
-                                            //0,0   0,1   0,2   ...
-                                            //1,0   1,1   1,2   ...
-                                            //n,0   n,1   ...   n,n
+        for(int i=mapl-newpos;i>mapl-newpos-lenght;i--){                               
+            Vector<Point> r = new Vector<Point>();         
+            for(int j=0;j<width;j++){               
+                r.add(map.get(i).get(j));
+            }
+            box.add(r); 
+        }            
 
         //reinserisco il personaggio spostato
-        for (Vector<Point> vm : map) {
-            for (Point pm : vm) {
-                for (Vector<Point> vb : box) {
-                    for (Point pb : vb) {
-                        if(pm == pb){
-                            pm.setChar('@');
-                            pm.setCharacter(true);
-                        }
-                    }
-                }
+        for (Vector<Point> vb : box) {
+            for (Point pb : vb) {
+                pb.setCharacter(true);
             }
         }
-
-        return map;
 
         //l'operazione di mettere e togliere l'ostacolo è necassaria, non posso semplicemente svuotare tutta la mappa
         //perché altrimenti eliminerei anche gli altri ostacoli, pur rimettendone solo uno, di conseguenza, preso un generico
         //vettore di ostacoli, a ogni Update non ne rimarrebbe che l'ultimo
     }
+    public void setAcc(double acc_){
+        acc = -9.81 + acc_;
+    }
+    public void setSpeed(double speed_){
+        speed = speed_;
+    }
+    public int getIntPosY(){
+        return (int)y;
+    }
 }
+
+    

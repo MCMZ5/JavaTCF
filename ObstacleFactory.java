@@ -13,10 +13,10 @@ public class ObstacleFactory{
      */
     public static Obstacle NewObstacle(Vector<Vector<Point>> map){
         Random rand = new Random();
-        int width = rand.nextInt(10-4) + 4;                 //nmax 10, nmin 4
-        int lenght = rand.nextInt(4-1) + 1;                 //nmax 4, nmin 1
-        double speed = rand.nextDouble() * (8.-2.) + 2.;    //nmax 8, nmin 2
-        double acc = rand.nextDouble() * (2.-.5) + .5;      //nmax 2, nmin 0.5
+        int width = rand.nextInt(3-1) + 1;                  //nmax 3, nmin 1
+        int lenght = rand.nextInt(6-2) + 2;                //nmax 6, nmin 2
+        double speed = rand.nextDouble() * (24.-12.) + 12.;   //nmax 16, nmin 12
+        double acc = rand.nextDouble() * (8.-2.) + 2.;      //nmax 4, nmin 0.8
         Obstacle obs = new Obstacle(width, lenght, speed, acc, map);
         return obs;
     }

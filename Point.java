@@ -4,7 +4,7 @@ public class Point{
 
     private int x;
     private int y;
-    private char c;
+    private char c=' ';
     private Boolean ischarcter;
     private Boolean isobstacle;
 
@@ -19,6 +19,12 @@ public class Point{
         y = y_;
         ischarcter = ischaracter_;
         isobstacle = isobstacle_;
+        if(ischarcter==true){
+            setChar('@');
+        }
+        if(isobstacle==true){
+            setChar('#');
+        }
     }
     public void setX(int x_){
         x = x_;
@@ -40,9 +46,21 @@ public class Point{
     }
     public void setCharacter(Boolean tf){
         ischarcter = tf;
+        if(ischarcter==true){
+            setChar('@');
+        }
+        if(ischarcter==false){
+            setChar(' ');
+        }
     }
     public void setObstacle(Boolean tf){
         isobstacle = tf;
+        if(isobstacle==true){
+            setChar('#');
+        }
+        if(isobstacle==false){
+            setChar(' ');
+        }
     }
     public Boolean isCharacter(){
         return ischarcter;

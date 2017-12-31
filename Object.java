@@ -11,6 +11,8 @@ public abstract class Object{
     protected Vector<Vector<Point>> box;      //rettangolo di punti che rappresenta l'ostacolo
     protected double speed;                   //velocità
     protected double acc;                     //accelerazione
+    protected double x;
+    protected double y;
                                               //abbiamo un problema, servono forse due velocità
                                               //orizontale e verticale, rispettivamente per 
                                               //Character e per Obstacle? Oppure basta questa? 
@@ -25,6 +27,6 @@ public abstract class Object{
     //è definita abstract per rendere obbligatorio l'override, con una sola velocità
     //e una sola accelerazione si potrebbero scrivere due funzioni agenti sulle x
     //per gli ostacoli e sulle y per il character
-    public abstract Vector<Vector<Point>> UpdatePosition(Vector<Vector<Point>> map, double time);
+    public abstract void UpdatePosition(Vector<Vector<Point>> map, double time);
 
 }
