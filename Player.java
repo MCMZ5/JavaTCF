@@ -56,10 +56,6 @@ public class Player{
         catch(ArrayIndexOutOfBoundsException exc){
             obvect.remove(obvect.size()-1);
             excounter++;
-            if(excounter>1){
-                crashed = true;
-            }
-
         }
     }
     /**
