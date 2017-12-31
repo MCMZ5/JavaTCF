@@ -3,6 +3,9 @@ package endlessrunningtcf;
 import java.util.Vector;
 
 public class Character extends Object{
+
+    private boolean[][] icon = {{false,false,false,true,true,false,false,false},{false,true,true,true,true,true,true,false},
+    {false,false,true,true,true,true,false,false},{false,false,true,false,false,true,false,false}};
     
     /**
      * - dati i parametri, costruisce la box dell'ostacolo e lo "aggiunge" in fondo (fuori, oltre) alla mappa
@@ -12,16 +15,18 @@ public class Character extends Object{
     public Character(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
         width = width_;
         lenght = lenght_;
-        speed = speed_;
-        acc = acc_;
+        speed = 0;
+        acc = -9.81;
         box = new Vector<Vector<Point>>();
+        y = 0;
+        
         
         // qui inizializzo box
-        int mapl = map.size();                  //la dimensione del vector "esterno" (width)
+        int mapl = map.size()-1;                  //la dimensione del vector "esterno" (width)
         
-        int mapw = map.firstElement().size();   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)
+        int mapw = map.firstElement().size()-1;   //la dimensione del vector "interno" (andava bene un elemento qualsiasi)(lenght)
 
-        for(int i=mapl-1;i>mapl-lenght;i--){                 
+        for(int i=mapl;i>mapl-lenght;i--){                 
             Vector<Point> r = new Vector<Point>();          
             for(int j=0;j<width;j++){              
                 r.add(map.get(i).get(j));
@@ -34,22 +39,34 @@ public class Character extends Object{
         //calcolo per MRUA iniziato ma non terminato
         int newpos = 0;
         speed = speed + (acc * (time/1000));
-        newpos = (int)((speed * (time/1000))+(.5 * acc * (time/1000) * (time/1000)));   //(int) avverte il compilatore che sono
+        y = y + ((speed * (time/1000))+(.5 * acc * (time/1000) * (time/1000)));
+        if(y<0){
+            y=0;
+        }
+        newpos = (int)y;   //(int) avverte il compilatore che sono
                                                                                         //consapevole della conversione double->int
-
         //elimino l'ostacolo dalla mappa
+        for (Vector<Point> vb : box) {
+            for (Point pb : vb) {
+                pb.setCharacter(false);
+            }
+        }
         box.removeAllElements();
-        int mapw = map.firstElement().size();
-        int mapl = map.size();
+        int mapw = map.firstElement().size() -1;
+        int mapl = map.size() -1;
+        int k=lenght-1;
 
         //sposto i punti della box del personaggio                                                   
-        for(int i=mapl-1;i>mapl-lenght;i--){                          
+        for(int i=mapl-newpos;i>mapl-newpos-lenght;i--){                               
             Vector<Point> r = new Vector<Point>();         
-            for(int j=0;j<width;j++){               
-                r.add(map.get(i).get(j));
+            for(int j=0;j<width;j++){  
+                if(icon[k][j]==true){           
+                    r.add(map.get(i).get(j));
+                }
             }
+            k--;
             box.add(r); 
-        }                 
+        }            
 
         //reinserisco il personaggio spostato
         for (Vector<Point> vb : box) {
@@ -62,4 +79,15 @@ public class Character extends Object{
         //perché altrimenti eliminerei anche gli altri ostacoli, pur rimettendone solo uno, di conseguenza, preso un generico
         //vettore di ostacoli, a ogni Update non ne rimarrebbe che l'ultimo
     }
+    public void setAcc(double acc_){
+        acc = -9.81 + acc_;
+    }
+    public void setSpeed(double speed_){
+        speed = speed_;
+    }
+    public int getIntPosY(){
+        return (int)y;
+    }
 }
+
+    
