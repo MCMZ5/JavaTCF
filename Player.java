@@ -15,6 +15,9 @@ public class Player{
     private Vector<Obstacle> obvect;            //vettore contenente tutti gli ostacoli
     private Character character;                //è il nostro personaggio, un derivato al pari degli ostacoli
                                                   //della classe astratta Object
+    private GUI myGUI;
+    private int excounter;
+
 
     //------METODI-------
 
@@ -52,6 +55,11 @@ public class Player{
         }
         catch(ArrayIndexOutOfBoundsException exc){
             obvect.remove(obvect.size()-1);
+            excounter++;
+            if(excounter>1){
+                crashed = true;
+            }
+
         }
     }
     /**
@@ -62,10 +70,14 @@ public class Player{
         for(int i=0; i<lenght; i++){        //|
             System.out.print("\033[A");  
         }                                   //|
+        myGUI.inizialize();
      
         for (Vector<Point> v : map) {
             System.out.print("|");
+            String r = new String();
             for (Point p : v) {
+                char[] c = {p.getChar()};
+                r.concat(new String(c));
                 System.out.print(p.getChar()); 
                 if(p.isObstacle()==true && p.isCharacter()==true){
                     crashed = true;
@@ -73,7 +85,9 @@ public class Player{
             }
             System.out.print("|");
             System.out.println();
+            myGUI.println("Check");//r);
         }
+        myGUI.show();
     }
 
     /**
@@ -116,6 +130,8 @@ public class Player{
         }
     }
     public void Run(){
+        myGUI = new GUI();
+        myGUI.create(lenght,width);
         int counter = 0; //decide dopo quanti cicli mandare un nuovo ostacolo
         int score = 0;
         while(crashed == false){
@@ -154,7 +170,7 @@ public class Player{
         for(int i=0; i<(width/2)-5; i++){        //|
             System.out.print("\033[C");  
         }     
-        System.out.println("\033[7mTi sei schiantato!");
+        System.out.println("\033[7mTi sei schiantato! "+excounter);
         for(int i=0; i<(width/2)-5; i++){        //|
             System.out.print("\033[C");  
         }     
