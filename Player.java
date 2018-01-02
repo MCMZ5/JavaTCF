@@ -124,6 +124,27 @@ public class Player{
             score++;
             if(score%300 == 0){     //il livello aumenta ogni 300 punti
                 level++;
+                for(int i=0; i<((lenght+4)/2)-1; i++){              //quando il giocatore sale di
+                    System.out.print("\033[A");                     //livello il programma lo scrive
+                }                                                   //in mezzo allo schermo
+                for(int i=0; i<(width/2)-5; i++){               
+                    System.out.print("\033[C");                     
+                }                                                   
+                System.out.println("Livello: "+level);    
+                for(int i=0; i<(width/2)-5; i++){        
+                    System.out.print("\033[C");  
+                }     
+                for(int i=0; i<((lenght+4)/2)-2; i++){        
+                    System.out.print("\033[B");  
+                } 
+                for(int i=0; i<width/2; i++){        
+                    System.out.print("\033[D");  
+                } 
+                try{    
+                    Thread.sleep(2000);
+                }
+                catch(InterruptedException e){
+                }
             }
             if(counter == 50){                                      //ogni 50 cicli crea
                 obvect.add(ObstacleFactory.NewObstacle(map,level)); //un nuovo ostacolo
