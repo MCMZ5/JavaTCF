@@ -88,15 +88,18 @@ public class Player{
             character = character_;
         }
         public void run() {
-            try{
-                System.in.read();                   //attende un input seguito
-                System.out.print("\033[A");         //da ENTER, quindi se riceve 
-                if(character.getIntPosY()==0){      //solo enter va avanti e setta
-                    character.setSpeed(8.);         //una velocità iniziale al character
-                }                                   //quindi fisicamente gli fornisce un
-            }                                       //impulso
-            catch(IOException e){
+            while(!Thread.currentThread().isInterrupted()){
+                try{
+                    System.in.read();                   //attende l'input di ENTER
+                    System.out.print("\033[A");         //se lo riceve va avanti e setta
+                    if(character.getIntPosY()==0){      //una velocità iniziale al character
+                        character.setSpeed(8.);         //quindi fisicamente gli fornisce un
+                    }                                   //impulso
+                }                                       
+                catch(IOException e){
+                }
             }
+            return;
         }
     }
 
@@ -116,6 +119,7 @@ public class Player{
             Update();
             DrawAndCheck();
             Thread key = new Thread(new Key(character));    //in un thread separato si crea il Keylistener
+            key.start();
             counter++;
             score++;
             if(score%300 == 0){     //il livello aumenta ogni 300 punti
@@ -125,7 +129,6 @@ public class Player{
                 obvect.add(ObstacleFactory.NewObstacle(map,level)); //un nuovo ostacolo
                 counter = 0;
             }
-            key.start();
             try{
                 key.join(50);
                 throw new InterruptedException();
