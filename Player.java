@@ -120,13 +120,13 @@ public class Player{
             score++;
             if(score%300 == 0){     //il livello aumenta ogni 300 punti
                 level++;
-                for(int i=0; i<((lenght+4)/2)-1; i++){              //quando il giocatore
-                    System.out.print("\033[A");                     //si schianta il programma scrive
-                }                                                   //in mezzo allo schermo e a
-                for(int i=0; i<(width/2)-5; i++){                   //colori invertiti un messaggio
-                    System.out.print("\033[C");                     //di game over e il punteggio
-                }                                                   //a 5 cifre (max 99999 per evitare
-                System.out.println("Livello: "+level);    //problemi grafici)
+                for(int i=0; i<((lenght+4)/2)-1; i++){              //quando il giocatore sale di
+                    System.out.print("\033[A");                     //livello il programma lo scrive
+                }                                                   //in mezzo allo schermo
+                for(int i=0; i<(width/2)-5; i++){               
+                    System.out.print("\033[C");                     
+                }                                                   
+                System.out.println("Livello: "+level);    
                 for(int i=0; i<(width/2)-5; i++){        
                     System.out.print("\033[C");  
                 }     
