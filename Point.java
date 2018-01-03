@@ -19,7 +19,7 @@ public class Point{
         y = y_;
         ischarcter = ischaracter_;
         isobstacle = isobstacle_;
-        if(ischarcter==true){
+        if(ischarcter==true){       //in funzione del valore delle booleane setta il char
             setChar('@');
         }
         if(isobstacle==true){
@@ -68,7 +68,7 @@ public class Point{
     public Boolean isObstacle(){
         return isobstacle;
     }
-    public Boolean CheckCollision(){
+    public Boolean checkCollision(){
         if(ischarcter == true && isobstacle == true){
             return true;
         }
