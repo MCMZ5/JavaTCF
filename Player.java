@@ -88,18 +88,17 @@ public class Player{
             character = character_;
         }
         public void run() {
-            while(!Thread.currentThread().isInterrupted()){
+            while(true){
                 try{
                     System.in.read();                   //attende l'input di ENTER
                     System.out.print("\033[A");         //se lo riceve va avanti e setta
                     if(character.getIntPosY()==0){      //una velocità iniziale al character
-                        character.setSpeed(8.);         //quindi fisicamente gli fornisce un
+                        character.setSpeed(9.);        //quindi fisicamente gli fornisce un
                     }                                   //impulso
                 }                                       
                 catch(IOException e){
                 }
             }
-            return;
         }
     }
 
@@ -111,17 +110,20 @@ public class Player{
      * - riceve l'input del giocatore
      * - esce quando il giocatore si schianta
      */
-    public void Run(){
+    public synchronized void Run(){
         int counter = 0; //decide dopo quanti cicli mandare un nuovo ostacolo
         int score = 0;   //tiene conto del punteggio
         int level = 1;   //livello di difficoltà
+        Thread key = new Thread(new Key(character));    //in un thread separato si crea il Keylistener
+        key.start();
+        key.interrupt();
         while(crashed == false){
+            key.interrupt();
             Update();
             DrawAndCheck();
-            Thread key = new Thread(new Key(character));    //in un thread separato si crea il Keylistener
-            key.start();
             counter++;
             score++;
+            int frequency = 50;
             if(score%300 == 0){     //il livello aumenta ogni 300 punti
                 level++;
                 for(int i=0; i<((lenght+4)/2)-1; i++){              //quando il giocatore sale di
@@ -146,13 +148,18 @@ public class Player{
                 catch(InterruptedException e){
                 }
             }
-            if(counter == 50){                                      //ogni 50 cicli crea
+            if(level<40){
+                frequency = 50 - level;
+            }
+            if(level>=40){
+                frequency = 10;
+            }
+            if(counter == frequency){                                      //ogni 50 cicli crea
                 obvect.add(ObstacleFactory.NewObstacle(map,level)); //un nuovo ostacolo
                 counter = 0;
             }
             try{
                 key.join(50);
-                throw new InterruptedException();
             }
             catch(InterruptedException e){
             }

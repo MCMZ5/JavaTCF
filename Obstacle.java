@@ -38,7 +38,14 @@ public class Obstacle extends Object{
         int mapw = map.size()-1;
         int newx = mapl;
         int newy = mapw;
-        speedy = speedy*Math.exp(-(x/speedx)*0.5) + (accy * (time/1000));       //il moto verticale è smorzato esponenzialmente
+        double t = ((-speedx)+(Math.sqrt((speedx*speedx)+2*accx*x)))/accx;
+        double gamma = 6*3.14*(width/2)*15;
+        if(speedy<=0.){
+            speedy = speedy + (accy/gamma)*(1-Math.exp(-gamma*t));
+        }
+        if(speedy>0.){
+            speedy = speedy + (accy/gamma)*(Math.exp(-gamma*t)-1);
+        }
         y = y + ((speedy * (time/1000))+(.5 * accy * (time/1000) * (time/1000)));
         speedx = speedx + (accx * (time/1000));
         x = x + ((speedx * (time/1000))+(.5 * accx * (time/1000) * (time/1000)));
@@ -53,10 +60,10 @@ public class Obstacle extends Object{
         }
 
         if(y==0 || y<0){                    //urto elastico con il pavimento
-            if(Math.abs(speedy)>6){         //se la velocità basta a risollevarsi conserva la quantità di moto
+            if(speedy<0.){         //se la velocità basta a risollevarsi conserva la quantità di moto
                 speedy = -speedy;
             }
-            else{                           //con velocità troppo basse l'ostacolo inizia a muoversi in orizzontale
+            else if(speedy==0. || Math.abs(speedy)<0.5){                           //con velocità troppo basse l'ostacolo inizia a muoversi in orizzontale
                 y = 0;
                 speedy = 0;
                 accy = 0;

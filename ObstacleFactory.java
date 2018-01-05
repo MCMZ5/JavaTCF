@@ -14,20 +14,23 @@ public class ObstacleFactory{
      */
     public static Obstacle NewObstacle(Vector<Vector<Point>> map, int level){
         Random rand = new Random();
+        double a = 12.;
+        double b = 0.8;
+        if(level>3){
+            a=a+level-2;
+            b=b+((level-2)/10);
+        }
         int width = rand.nextInt(3-1) + 1;                      //nmax 3, nmin 1
         int lenght = rand.nextInt(6-2) + 2;                     //nmax 6, nmin 2
-        double speedx = rand.nextDouble() * (16.-12.) + 12.;    //nmax 16, nmin 12
+        double speedx = rand.nextDouble() * (16.-12.) + a;    //nmax 16+a, nmin 12+a
         double speedy = 0;
         double acc = 0;
         int y = 0; 
         if(level>1){
-            acc = rand.nextDouble() * (4.-.8) + .8;             //nmax 3, nmin 1
+            acc = rand.nextDouble() * (4.-.8) + b;             //nmax 3.2+b, nmin b
         }
         if(level>2){
-            y = rand.nextInt(map.size()-5)+width;               //nmax 3, nmin 1
-        }
-        if(level>3){
-            speedy = rand.nextDouble() * (16.-12.);             //nmax 3, nmin 1
+            y = (rand.nextInt(map.size()-5))/2;               //nmax 7.5, nmin 0
         }
         Obstacle obs = new Obstacle(y , width, lenght, speedx, speedy , acc, map);
         return obs;
