@@ -54,7 +54,7 @@ public class Player{
         }
     }
     /**
-     * - disegna tutti i (char dei) punti della mappa 
+     * disegna tutti i (char dei) punti della mappa 
      */
     private void DrawAndCheck(){
 
@@ -66,8 +66,8 @@ public class Player{
             System.out.print("|");
             for (Point p : v) {
                 System.out.print(p.getChar()); 
-                if(p.checkCollision()==true){  //per evitare troppi cicli for inseriamo
-                    crashed = true;                                 //qui anche la check
+                if(p.checkCollision()==true){  //per evitare ulteriori cicli for inseriamo
+                    crashed = true;            //qui anche la check
                 }
             }
             System.out.print("|");
@@ -86,7 +86,7 @@ public class Player{
                     System.in.read();                   //attende l'input di ENTER
                     System.out.print("\033[A");         //se lo riceve va avanti e setta
                     if(character.getIntPosY()==0){      //una velocità iniziale al character
-                        character.setSpeed(9.);        //quindi fisicamente gli fornisce un
+                        character.setSpeed(9.);         //quindi fisicamente gli fornisce un
                     }                                   //impulso
                 }                                       
                 catch(IOException e){
@@ -106,13 +106,13 @@ public class Player{
     public synchronized void Run(){
         int counter = 0; //decide dopo quanti cicli mandare un nuovo ostacolo
         int score = 0;   //tiene conto del punteggio
-        int level = 1;   //livello di difficoltà
+        int level = 5;   //livello di difficoltà
         Thread key = new Thread(new Key(character));    //in un thread separato si crea il Keylistener
         key.start();
         key.interrupt();
         while(crashed == false){
-            key.interrupt();
             Update();
+            key.interrupt();
             DrawAndCheck();
             counter++;
             score++;
@@ -147,8 +147,8 @@ public class Player{
             if(level>=40){
                 frequency = 10;
             }
-            if(counter == frequency){                                      //ogni 50 cicli crea
-                obvect.add(ObstacleFactory.NewObstacle(map,level)); //un nuovo ostacolo
+            if(counter == frequency){                                   //ogni 50 cicli crea
+                obvect.add(ObstacleFactory.NewObstacle(map,level));     //un nuovo ostacolo
                 counter = 0;
             }
             try{
@@ -165,8 +165,8 @@ public class Player{
         }                                                   //in mezzo allo schermo e a
         for(int i=0; i<(width/2)-5; i++){                   //colori invertiti un messaggio
             System.out.print("\033[C");                     //di game over e il punteggio
-        }                                                   //a 5 cifre (max 99999 per evitare
-        System.out.println("\033[7mTi sei schiantato!");    //problemi grafici)
+        }                                                   //a 5 cifre
+        System.out.println("\033[7mTi sei schiantato!");
         for(int i=0; i<(width/2)-5; i++){        
             System.out.print("\033[C");  
         }     

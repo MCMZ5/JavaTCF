@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class Game{
     public static void main(String[] args){
+        
         String instructions[] = {"In questo gioco interpreti un personaggio che deve saltare degli ostacoli.","Ogni 300 punti passerai di livello e aumenterà la difficoltà con movimenti più veloci e complessi degli ostacoli.","Nel primo livello si muoveranno a velocità costante mentre dal secondo avranno anche un'accelerazione.","Dal quinto avranno anche un moto verticale rimbalzando sul pavimento.","Velocità, accelerazione e frequenza degli ostacoli aumenteranno col progredire dei livelli.","L'obiettivo è arrivare il più avanti possibile senza schiantarsi.","Fai attenzione a premere solo il tasto ENTER.","Premendo ENTER inizierà il gioco, buona fortuna!"};
         
         Player p = new Player();    //si crea il giocatore
@@ -39,7 +40,7 @@ public class Game{
         System.out.print("\033[A");
         
         try{
-            System.in.read();   //Thread.sleep(30000);
+            System.in.read();
         }
         catch(IOException e){
         }

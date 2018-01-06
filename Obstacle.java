@@ -5,7 +5,7 @@ import java.util.Vector;
 public class Obstacle extends Object{
 
     /**
-     * - dati i parametri, costruisce la box dell'ostacolo e inizializza i parametri del moto
+     * dati i parametri, costruisce la box dell'ostacolo e inizializza i parametri del moto
      */
     public Obstacle(int y_, int width_, int lenght_, double speedx_,double speedy_, double accx_, Vector<Vector<Point>> map){
         width = width_;
@@ -31,6 +31,7 @@ public class Obstacle extends Object{
         }
     }
 
+    @Override
     public void UpdatePosition(Vector<Vector<Point>> map, double time){
         
         //calcolo del moto
@@ -43,7 +44,7 @@ public class Obstacle extends Object{
         speedx = speedx + (accx * (time/1000));
         x = x + ((speedx * (time/1000))+(.5 * accx * (time/1000) * (time/1000)));
         newy = mapw - 2*(int)(y);       //il 2X riscala la map da 1m a quadretto a 0,5m a quadretto (personaggio di 2m e non 4)
-        newx = mapl - 2*(int)(x);       //(int) avverte il compilatore che sono consapevole della conversione double->int
+        newx = mapl - 2*(int)(x);       //(int) fa il casting
         
         if(newx-lenght<0){      //questi 2 if permettono agli ostacoli di scomparire se escono dalla map
             lenght=newx;
@@ -51,11 +52,11 @@ public class Obstacle extends Object{
         if(newy-width<0){
                 width=newy;
         }
-        if(y==0 || y<0){                    //urto elastico con il pavimento
+        if(y==0 || y<0){           //urto totalmente elastico con il pavimento (di massa infinita)
             if(speedy<0.){         //se la velocità basta a risollevarsi conserva la quantità di moto
                 speedy = -speedy;
             }
-            else if(speedy==0. || Math.abs(speedy)<0.5){                           //con velocità troppo basse l'ostacolo inizia a muoversi in orizzontale
+            else if(speedy==0. || Math.abs(speedy)<0.5){ //annulliamo le volecità troppo basse 
                 y = 0;
                 speedy = 0;
                 accy = 0;

@@ -4,11 +4,12 @@ import java.util.Vector;
 
 public class Character extends Object{
 
+    //definisce la forma del personaggio
     private boolean[][] icon = {{false,false,false,true,true,false,false,false},{false,true,true,true,true,true,true,false},
     {false,false,true,true,true,true,false,false},{false,false,true,false,false,true,false,false}};
     
     /**
-     * - dati i parametri, costruisce la box del personaggio e inizializza il suo moto
+     * dati i parametri, costruisce la box del personaggio e inizializza il suo moto
      */
     public Character(Vector<Vector<Point>> map){
         width = 8;
@@ -34,8 +35,9 @@ public class Character extends Object{
     }
 
     /**
-     * - sposta il personaggio
+     * sposta il personaggio
      */
+    @Override
     public void UpdatePosition(Vector<Vector<Point>> map, double time){
         
         //calcolo per MRUA
@@ -46,7 +48,7 @@ public class Character extends Object{
         if(y<0){
             y=0;    //evita che il personaggio affondi nel pavimento
         }
-        newpos = 2*(int)y;   //(int) avverte il compilatore che sono consapevole della conversione double->int
+        newpos = 2*(int)y;   //(int) fa il casting
                                                                         
         //elimino l'ostacolo dalla mappa
         for (Vector<Point> vb : box) {
@@ -65,7 +67,7 @@ public class Character extends Object{
         for(int i=mapl-newpos;i>mapl-newpos-lenght;i--){                               
             Vector<Point> r = new Vector<Point>();         
             for(int j=0;j<width;j++){  
-                if(icon[k][j]==true){           
+                if(icon[k][j]==true){   //definiamo la forma del personaggio, vedi private boolean[][] icon     
                     r.add(map.get(i).get(j));
                 }
             }

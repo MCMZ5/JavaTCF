@@ -22,7 +22,6 @@ public abstract class Object{
      * Invocata da un Object, dato un tempo in millisecondi e una mappa, ricalcola 
      * la sua posizione e restituisce la mappa aggiornata
      */
-    //è definita abstract per rendere obbligatorio l'override
     public abstract void UpdatePosition(Vector<Vector<Point>> map, double time);
 
 }
