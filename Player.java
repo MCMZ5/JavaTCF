@@ -15,9 +15,7 @@ public class Player{
     private Vector<Obstacle> obvect;            //vettore contenente tutti gli ostacoli
     private Character character;                //è il nostro personaggio, un derivato al pari degli ostacoli
                                                 //della classe astratta Object
-    private int excounter;                      //questo serve a contare le eccezioni per evitare un bug
-                                                //dovuto ad eccezioni ripetute
-
+    
     //------METODI-------
 
     /**
@@ -39,7 +37,7 @@ public class Player{
             }
             map.add(r);
         }
-        character = new Character(8,4, 0, 0, map);
+        character = new Character(map);
     }
     /**
      * - aggiorna la posizione del giocatore
@@ -47,17 +45,12 @@ public class Player{
      */
     private void Update(){
         try{
-            excounter = 0;
             character.UpdatePosition(map, 50);
             for (Obstacle o : obvect) {
                 o.UpdatePosition(map, 50);
             }  
         }
         catch(ArrayIndexOutOfBoundsException exc){
-            excounter++;
-            if(excounter==1){                       //per evitare di rimuovere tanti ostacoli per n
-                obvect.remove(obvect.size()-1);     //eccezioni dovute ad un solo ostacolo
-            }
         }
     }
     /**

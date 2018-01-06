@@ -1,26 +1,21 @@
-#MAKEFILE OF BATTLESHIP-TCF
+#MAKEFILE OF ENDLESSRUNNINGTCF
 
 #DEFINIZIONE DEL COMPILATORE
 JC = javac
+#IDENTIFICA LA CARTELLA IN CUI CERCARE I FILE
 VPATH = ./endlessrunningtcf
 #OPZIONI DEL COMPILATORE
-#JFLAGS = 
+JFLAGS = -d ./ -cp ./
 #IDENTIFICA TUTTI I FILE DA CUI IL PROGRAMMA DIPENDE
 OBJECTS = Point.class Object.class Obstacle.class Character.class ObstacleFactory.class Player.class Game.class
-#IDENTIFICA IL NUMERO DI JOBS PER MAKE
-#(NON UTILIZZARE PIÙ DEL NUMERO DI CORES DISPONIBILI)
-CPUCORES = 1
 
-all:
-	$(MAKE) -j $(CPUCORES) running-tcf
-
-#ISTRUZIONI PER L'ESEGUIBILE
-running-tcf: $(OBJECTS)
-	jar -cvf $@.jar ./endlessrunningtcf/*.class
+all: $(OBJECTS)
+	jar cvfe running-tcf.jar endlessrunningtcf.Game ./endlessrunningtcf/*.class
+	$(MAKE) clean
 
 #ISTRUZIONI PER COMPILARE LE VARIE CLASSI
 %.class: %.java
-	 $(JC) -d ./ -cp ./ $^
+	 $(JC) $(JFLAGS) $^
 	 
 #ISTRUZIONI PER ELIMINARE I FILE *.class
 clean: 
@@ -30,4 +25,4 @@ clean:
 
 #ISTRUZIONI PER LANCIARE IL PROGRAMMA
 run:
-	java -cp running-tcf.jar endlessrunningtcf.Game
+	java -jar running-tcf.jar

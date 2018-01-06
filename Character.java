@@ -10,9 +10,9 @@ public class Character extends Object{
     /**
      * - dati i parametri, costruisce la box del personaggio e inizializza il suo moto
      */
-    public Character(int width_, int lenght_, double speed_, double acc_, Vector<Vector<Point>> map){
-        width = width_;
-        lenght = lenght_;
+    public Character(Vector<Vector<Point>> map){
+        width = 8;
+        lenght = 4;
         speedy = 0;
         accy = -9.81;
         box = new Vector<Vector<Point>>();
